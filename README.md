@@ -56,7 +56,7 @@ Glacier retreat presents significant environmental and social challenges. Unders
 <!-- GETTING STARTED -->
 ## Getting Started
 
-All notebooks to run the model and explore its pre-processing are available [here](https://github.com/marvande/Antarctica-RCM-Emulator/tree/main/scr). 
+All notebooks to run the model and explore its pre-processing are available [here](https://github.com/marvande/miniML-MB/tree/main/src). 
 
 
 
