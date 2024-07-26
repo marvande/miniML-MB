@@ -7,8 +7,8 @@ Notebooks:
 - Models:
   - `1.1.1 miniML-MB-train annual to monthly`: train miniML-MB in different predictor aggregations
   - `1.1.2 PDD model`: run the PDD model
-  - `1.1.3 miniML-MB-variable combinations`: run miniML-MB with all variable combinations and clustering of feature importance
-  - `1.1.4 Extreme years`: run miniML-MB on extreme years
+  - `1.1.3 miniML-MB-variable combinations`: run miniML-MB with all variable combinations and clustering of feature importance. Creates Figure 5 & 11
+  - `1.1.4 Extreme years`: run miniML-MB on extreme years. Creates Figure 9.
   - `1.1.5 miniML-MB on ERA5`: run miniML-MB with ERA5-Land instead of MeteoSwiss
 - Plots for manuscript:
   - `2.1.1 maps`: creates figure 1 with cartopy
