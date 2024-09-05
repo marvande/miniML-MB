@@ -64,7 +64,7 @@ def plot_losses_ann_monthly(df_metrics_annual,
                         ax5,
                         ax6,
                         palette=palette_grays,
-                        alpha=0.5,
+                        alpha=0.8,
                         model=model)
     ax4.set_ylabel('Monthly MeteoSuisse')
 
@@ -207,7 +207,7 @@ def evalPlot(
                 df_metrics[f"{metric}_std"][i],
                 linestyle="None",
                 color="grey",
-                alpha=0.5,
+                alpha=0.8,
                 marker=None,
             )
 
@@ -222,23 +222,23 @@ def evalPlot(
         ax.set_title(f"{long_name} per stake", fontsize=16)
     ax.set_xlabel("")
     if metric[:4] == "rmse" or metric[:3] == "mae":
-        ax.axhline(0.9, linestyle="--", alpha=0.5, color="grey")
-        ax.axhline(0.65, linestyle="--", alpha=0.5, color="grey")
+        ax.axhline(0.9, linestyle="--", alpha=0.8, color="grey")
+        ax.axhline(0.65, linestyle="--", alpha=0.8, color="grey")
 
     if metric[:5] == "nrmse":
-        ax.axhline(1, linestyle="--", alpha=0.5, color="grey")
-        ax.axhline(0.5, linestyle="--", alpha=0.5, color="grey")
+        ax.axhline(1, linestyle="--", alpha=0.8, color="grey")
+        ax.axhline(0.5, linestyle="--", alpha=0.8, color="grey")
 
     if metric[:11] == "correlation":
         ax.set_ylim(bottom=-1, top=1)
-        ax.axhline(0, linestyle="--", alpha=0.5, color="grey")
-        ax.axhline(0.6, linestyle="--", alpha=0.5, color="grey")
+        ax.axhline(0, linestyle="--", alpha=0.8, color="grey")
+        ax.axhline(0.6, linestyle="--", alpha=0.8, color="grey")
     if metric[:10] == "rsquared_2":
         ax.set_ylim(bottom=0, top=1)
 
     if (metric == "diff_rmse" or metric == "diff_correlation"
             or metric == "diff_mae" or metric == "diff_rsquared"):
-        ax.axhline(0, linestyle="--", alpha=0.5, color="grey")
+        ax.axhline(0, linestyle="--", alpha=0.8, color="grey")
     h, l = g.get_legend_handles_labels()
 
     ax.legend(h,
@@ -427,7 +427,7 @@ def PlotDiffPDD(df_metrics_plot, color_palette, metric='rmse'):
 
     if metric == 'rmse':
         for ax in [ax1, ax2, ax3]:
-            ax.axhline(200, linestyle="--", alpha=0.5, color="grey")
+            ax.axhline(200, linestyle="--", alpha=0.8, color="grey")
 
     for ax in [ax1, ax3]:
         ax.legend([], [], frameon=False)
@@ -462,7 +462,7 @@ def PlotCompareModelsPDD(df_metrics_plot,
              ax1,
              metric=f'{metric}_pdd_a',
              color_palette=palette_grays,
-             alpha=0.5,
+             alpha=0.8,
              frequency=None,
              add_std=False)
     evalPlot(df_metrics_plot.sort_values(by='stakes_full'),
@@ -478,7 +478,7 @@ def PlotCompareModelsPDD(df_metrics_plot,
              ax2,
              metric=f'{metric}_pdd_a',
              color_palette=palette_grays,
-             alpha=0.5,
+             alpha=0.8,
              frequency=None,
              add_std=False)
     evalPlot(df_metrics_plot.sort_values(by='stakes_full'),
@@ -500,7 +500,7 @@ def PlotCompareModelsPDD(df_metrics_plot,
              ax3,
              metric=f'{metric}_pdd_a',
              color_palette=palette_grays,
-             alpha=0.5,
+             alpha=0.8,
              frequency=None,
              add_std=False)
     ax3.set_title('XGBoost++ versus TIM (in gray)')
@@ -789,7 +789,7 @@ def plotSingleStake(stake,
                 ylabel=ylabel,
                 label=label,
                 marker=marker,
-                alpha=0.5)
+                alpha=0.8)
 
     legend_text = linePlot(ax2,
                            feat_test_stake[stake],
@@ -962,7 +962,7 @@ def linePlot(ax,
         y="truth",
         marker=".",
         color="grey",
-        alpha=0.5,
+        alpha=0.8,
         ax=ax,
         s=5,
     )
@@ -1714,6 +1714,7 @@ def plotClusterStats(df_info, mean_df):
     # colors = ['#74add1', '#fee090', '#de77ae']
     # colors = get_cmap_hex(cm.devon, 5)
     colors = ['#82a7cc', '#d3bad8', '#ccafaf', '#de77ae']
+    markers = ['o', 's', 'X']
     color_palette = sns.color_palette(colors)
     M, N = 1, 5
     fig = plt.figure(figsize=(18, 5))
@@ -1724,62 +1725,82 @@ def plotClusterStats(df_info, mean_df):
         'alpha': 0.8,
         'palette': color_palette,
         'hue': 'cluster',
-        'jitter': True
+        'jitter': True,
     }
-    sns.stripplot(
-        df_info,
+    for i, marker in enumerate(markers):
+        sns.stripplot(
+        df_info[df_info.cluster == i+1],
         x='cluster',
         y='elevation',
         ax=ax1,
+        marker = marker,
         **scatter_arguments,
-    )
+        )
     ax1.set_ylabel('[m]', fontsize=titlefont)
     ax1.set_title('Elevation', fontsize=titlefont)
 
     ax2 = plt.subplot(M, N, 3)
     df_info['training_mb'] = df_info['training_mb'] / 1000
-    sns.stripplot(
-        df_info,
+    
+    for i, marker in enumerate(markers):
+        sns.stripplot(
+        df_info[df_info.cluster == i+1],
         x='cluster',
         y='training_mb',
         ax=ax2,
+        marker = marker,
         **scatter_arguments,
-    )
+        )
+    
     ax2.set_title('Mean PMB', fontsize=titlefont)
     ax2.set_ylabel('[m w.e.]', fontsize=titlefont)
 
     ax3 = plt.subplot(M, N, 1)
-    sns.scatterplot(df_info,
-                    x='lon',
-                    y='lat',
-                    ax=ax3,
-                    palette=color_palette,
+    
+    for i, marker in enumerate(markers):
+        sns.scatterplot(
+        df_info[df_info.cluster == i+1],
+        x='lon',
+        y='lat',
+        ax=ax3,
+        marker = marker,
+        palette=color_palette,
                     hue='cluster',
-                    s=200)
+                    s = 200
+        )
+
+
     ax3.set_title('Position', fontsize=titlefont)
     ax3.set_ylabel('Latitude [$\degree$]', fontsize=titlefont)
     ax3.set_xlabel('Longitude [$\degree$]', fontsize=titlefont)
     ax3.legend([])
 
     ax4 = plt.subplot(M, N, 4)
-    sns.stripplot(
-        df_info,
+    
+    for i, marker in enumerate(markers):
+        sns.stripplot(
+        df_info[df_info.cluster == i+1],
         x='cluster',
         y='training_time',
         ax=ax4,
+        marker = marker,
         **scatter_arguments,
-    )
+        )
+    
     ax4.set_ylabel('', fontsize=titlefont)
     ax4.set_title('Average year', fontsize=titlefont)
 
-    ax5 = plt.subplot(M, N, 5)
-    sns.stripplot(
-        df_info,
+    ax5 = plt.subplot(M, N, 5)    
+    for i, marker in enumerate(markers):
+        sns.stripplot(
+        df_info[df_info.cluster == i+1],
         x='cluster',
         y='training_length',
         ax=ax5,
+        marker = marker,
         **scatter_arguments,
-    )
+        )
+    
     ax5.set_ylabel('')
     ax5.set_title('Number of years', fontsize=titlefont)
     for ax in [ax1, ax2, ax4, ax5]:
@@ -2079,13 +2100,13 @@ def plotInputExtrm(best_combi, weights_t2m, weights_tp, stake_old, input_type,
 
     sns.histplot(inputDF.t2m_mean.values,
                  label='all years',
-                 alpha=0.5,
+                 alpha=0.8,
                  kde=True,
                  ax=ax1)
     sns.histplot(inputDF.loc[target.index].t2m_mean.values,
                  label='obs. years',
                  color='grey',
-                 alpha=0.5,
+                 alpha=0.8,
                  kde=True,
                  ax=ax1)
     ax1.set_xlabel('t2m')
@@ -2116,13 +2137,13 @@ def plotInputExtrm(best_combi, weights_t2m, weights_tp, stake_old, input_type,
 
     sns.histplot(inputDF.tp_tot.values,
                  label='all years',
-                 alpha=0.5,
+                 alpha=0.8,
                  kde=True,
                  ax=ax3)
     sns.histplot(inputDF.loc[target.index].tp_tot.values,
                  label='obs. years',
                  color='grey',
-                 alpha=0.5,
+                 alpha=0.8,
                  kde=True,
                  ax=ax3)
     ax3.set_xlabel('tp')

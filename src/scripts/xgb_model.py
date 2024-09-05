@@ -132,9 +132,10 @@ def runXGBoost(
 
             else:
                 print("Error, wrong temporal frequency")
-            
+
             # Create target:
-            target_years = [d.year for d in target_DF.date_fix1] # years are end of hydr year.
+            target_years = [d.year for d in target_DF.date_fix1
+                            ]  # years are end of hydr year.
             target = target_DF[["date_fix1", "b_a_fix", "b_w_fix"]]
             target["years"] = target_years
             target.set_index("years", inplace=True)
@@ -198,9 +199,9 @@ def applyXGBoost(
         seed=SEED,
         log=False,
         objective='reg:absoluteerror'  # 'reg:squarederror'
-        ):
+):
     seed_all(seed)
-    
+
     # Get out input data
     inputDF = input_["annual"]
 
@@ -241,11 +242,19 @@ def applyXGBoost(
         # Create input and target arrays:
 
         # check if we want to remove or add 2022 in the test index
-        test_index = remAdd2022(add_2022, 2022 in inputDF.index, inputDF, test_index, year = 2022)
-        test_index = remAdd2022(add_2022, 2023 in inputDF.index, inputDF, test_index, year = 2023)
-        
+        test_index = remAdd2022(add_2022,
+                                2022 in inputDF.index,
+                                inputDF,
+                                test_index,
+                                year=2022)
+        test_index = remAdd2022(add_2022,
+                                2023 in inputDF.index,
+                                inputDF,
+                                test_index,
+                                year=2023)
+
         indices = {"test": test_index, "train2": train2_index}
-        
+
         X, y, time = CreateInputArrays(input_, target, indices, mb_match)
 
         # Append to KFold experiment:
@@ -275,7 +284,7 @@ def applyXGBoost(
                                                 param_grid,
                                                 eval_metrics,
                                                 log_=False,
-                                                objective = objective)
+                                                objective=objective)
             # Fit best model:
             params_RF = {**best_params_, **params}
         else:
@@ -320,7 +329,7 @@ def applyXGBoost(
         predictions_XG = xgboost.predict(X["test"],
                                          iteration_range=[0, best_iteration])
         pred_XG_kfold.append(predictions_XG)
-        
+
         # Feature importance:
         fi_kfold.append(xgboost.feature_importances_)
 
@@ -503,16 +512,17 @@ def CreateInputArrays(input_, target, indices, mb_match):
     return X, y, time
 
 
-def RGS(X,
+def RGS(
+        X,
         y,
         eval_set,
         param_grid,
         eval_metrics,
         seed=SEED,
         log_=True,
-        model='XGBoost', 
-        objective = 'reg:absoluteerror' #"reg:squarederror"
-        ):
+        model='XGBoost',
+        objective='reg:absoluteerror'  #"reg:squarederror"
+):
     """Grid search: finds the best hyperparameters
 
     Args:
