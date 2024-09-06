@@ -69,6 +69,8 @@ All notebooks to run the model and explore its pre-processing are available [her
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
+If you use this code, cite the work as "Marijn van der Meer, Harry Zekollari, Matthias Huss, Jordi Bolibar, Kamilla Hauknes Sjursen, and Daniel Farinott: A minimal machine learning glacier mass balance model, The Cryosphere, 2024 (https://doi.org/10.5194/egusphere-2024-2378)"
+
 
 
 <!-- CONTACT -->
