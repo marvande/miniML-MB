@@ -10,7 +10,11 @@
   <a href="https://github.com/othneildrew/Best-README-Template">
     <img src="images/eth_logo_kurz_pos.png" alt="Logo" width="150" height="80">
   </a>
-
+<p align="center">
+    <br />
+    <a href="https://egusphere.copernicus.org/preprints/2024/egusphere-2024-2378/"><strong>Read the paper»</strong></a>
+    <br />
+  </p>
   <h3 align="center">A minimal machine learning mass balance model:</h3>
 </div>
 
