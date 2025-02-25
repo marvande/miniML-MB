@@ -41,6 +41,10 @@
 
 
 <!-- ABOUT THE PROJECT -->
+## How to cite
+
+van der Meer, M., Zekollari, H., Huss, M., Bolibar, J., Sjursen, K. H., and Farinotti, D.: A minimal machine-learning glacier mass balance model, The Cryosphere, 19, 805–826, https://doi.org/10.5194/tc-19-805-2025, 2025.
+
 ## About The Project
 
 Glacier retreat presents significant environmental and social challenges. Understanding the local impacts of climatic drivers on glacier evolution is crucial, with mass balance being a central concept. This study introduces miniML-MB, a new minimal machine learning model designed to estimate annual point mass balance (PMB) for very small datasets. Based on an XGBoost architecture, miniML-MB is applied to model PMB at individual sites in the Swiss Alps, emphasizing the need for an appropriate training framework and dimensionality reduction techniques. A substantial added value of miniML-MB is its data-driven identification of key climatic drivers of local mass balance. The best PMB prediction performance was achieved with two predictors: mean air temperature (May-August) and total precipitation (October-February). miniML-MB models PMB accurately from 1961 to 2021, with a mean absolute error (MAE) of 0.417 m w.e. across all sites. Notably, miniML-MB demonstrates similar and, in most cases, superior predictive capabilities compared to a simple positive degree-day (PDD) model (MAE of 0.541 m w.e.). Compared to the PDD model, miniML-MB is less effective at reproducing extreme mass balance values (e.g., 2022) that fall outside its training range. As such, miniML-MB shows promise as a gap-filling tool for sites with incomplete PMB measurements, as long as the missing year's climate conditions are within the training range. This study underscores potential ways for further refinement and broader applications of data-driven approaches in glaciology.
